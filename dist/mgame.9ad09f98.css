@@ -1,19 +1,22 @@
+
 .card-container{
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    row-gap: 10px; 
+    grid-template-columns: auto auto auto auto auto;
+    row-gap: 4%; 
 }
 
 .display-board{
     display: grid;
-    grid-template-columns: auto auto auto;
-    margin-bottom: 2%;
+    grid-template-columns: auto auto auto auto;
+    margin-bottom: 1%;
 }
 .new-game{
-    background-color: purple;
     height: 50px;
     color: white;
-    font-size: large;
 }
+.wrapper{
+    padding: 3%;   
+}
+
 
 /*# sourceMappingURL=/mgame.9ad09f98.css.map */

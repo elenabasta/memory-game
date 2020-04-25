@@ -564,8 +564,10 @@ module.exports = "/front-1.1ec382ce.png";
 module.exports = "/front-2.014b3b98.png";
 },{}],"sprites/front-3.png":[function(require,module,exports) {
 module.exports = "/front-3.fd82b02a.png";
-},{}],"sprites/front-4.jpg":[function(require,module,exports) {
-module.exports = "/front-4.e3252483.jpg";
+},{}],"sprites/front-4.png":[function(require,module,exports) {
+module.exports = "/front-4.4b109f51.png";
+},{}],"sprites/front-5.png":[function(require,module,exports) {
+module.exports = "/front-5.92f5cdb0.png";
 },{}],"sprites/card-back.png":[function(require,module,exports) {
 module.exports = "/card-back.d677e786.png";
 },{}],"model.js":[function(require,module,exports) {
@@ -584,7 +586,9 @@ var front2 = require('./sprites/front-2.png');
 
 var front3 = require('./sprites/front-3.png');
 
-var front4 = require('./sprites/front-4.jpg');
+var front4 = require('./sprites/front-4.png');
+
+var front5 = require('./sprites/front-5.png');
 
 var back = require('./sprites/card-back.png');
 
@@ -597,10 +601,10 @@ var scoreBoard = document.querySelector('.score');
 exports.scoreBoard = scoreBoard;
 var winMessage = document.querySelector('.win-message');
 exports.winMessage = winMessage;
-var cardFrontArray = (0, _ezRead.seal)([front1, front1, front2, front2, front3, front3, front4, front4]);
+var cardFrontArray = (0, _ezRead.seal)([front1, front1, front2, front2, front3, front3, front4, front4, front5, front5]);
 var shuffledCardFronts = (0, _ezRead.shuffle)(cardFrontArray);
 exports.shuffledCardFronts = shuffledCardFronts;
-},{"ez-read":"node_modules/ez-read/ez-read.js","./sprites/front-1.png":"sprites/front-1.png","./sprites/front-2.png":"sprites/front-2.png","./sprites/front-3.png":"sprites/front-3.png","./sprites/front-4.jpg":"sprites/front-4.jpg","./sprites/card-back.png":"sprites/card-back.png"}],"flip-card.js":[function(require,module,exports) {
+},{"ez-read":"node_modules/ez-read/ez-read.js","./sprites/front-1.png":"sprites/front-1.png","./sprites/front-2.png":"sprites/front-2.png","./sprites/front-3.png":"sprites/front-3.png","./sprites/front-4.png":"sprites/front-4.png","./sprites/front-5.png":"sprites/front-5.png","./sprites/card-back.png":"sprites/card-back.png"}],"flip-card.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -611,7 +615,7 @@ exports.default = void 0;
 var _model = require("./model");
 
 function maybeFlip(cardId, cardNum, source) {
-  if (source === 'http://localhost:1234/card-back.d677e786.png') {
+  if (source === 'http://localhost:33779/card-back.d677e786.png') {
     flipCard(cardId, cardNum);
     return true;
   }
@@ -681,8 +685,8 @@ function runGame(event) {
     var isMatch = (0, _checkMatch.default)(lastTwoSources);
     runMatchLogic(isMatch);
 
-    if (score === 4) {
-      _model.winMessage.innerHTML = "Elena kraljice pobedila si!";
+    if (score === 5) {
+      _model.winMessage.innerHTML = "You won!";
     }
   }
 }
@@ -726,12 +730,12 @@ function resetGame() {
 }
 
 function resetCards() {
-  for (var i = 0; i <= 7; i++) {
+  for (var i = 0; i <= 9; i++) {
     var img = document.querySelector("#card-".concat(i));
     img.src = _model.back;
   }
 }
-},{"ez-read":"node_modules/ez-read/ez-read.js","./model":"model.js","./flip-card":"flip-card.js","./check-match":"check-match.js"}],"../../../.npm/_npx/314789/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ez-read":"node_modules/ez-read/ez-read.js","./model":"model.js","./flip-card":"flip-card.js","./check-match":"check-match.js"}],"../../../.npm/_npx/330252/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -759,7 +763,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44545" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37023" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -935,5 +939,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../.npm/_npx/314789/lib/node_modules/parcel/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["../../../.npm/_npx/330252/lib/node_modules/parcel/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/mgame.e31bb0bc.js.map

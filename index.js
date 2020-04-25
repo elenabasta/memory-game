@@ -26,8 +26,8 @@ newGameButton.addEventListener('click',resetGame);
         lastTwoIds.push(cardId);
         const isMatch = maybeCheckMatch(lastTwoSources);
         runMatchLogic(isMatch)
-        if(score === 4){
-            winMessage.innerHTML="Elena kraljice pobedila si!";
+        if(score === 5){
+            winMessage.innerHTML="You won!";
         }
   }
 
@@ -78,7 +78,7 @@ function resetGame(){
 }
 
 function resetCards(){
-    for(let i=0; i<= 7; i++ ){
+    for(let i=0; i<= 9; i++ ){
         const img = document.querySelector(`#card-${i}`)
         img.src=back;
     }
