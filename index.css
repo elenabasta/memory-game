@@ -7,7 +7,7 @@
 .display-board{
     display: grid;
     grid-template-columns: auto auto auto;
-    margin-bottom: 2%;
+    margin-bottom: 5%;
 }
 .new-game{
     background-color: purple;
