@@ -615,7 +615,9 @@ exports.default = void 0;
 var _model = require("./model");
 
 function maybeFlip(cardId, cardNum, source) {
-  if (source === 'http://localhost:33779/card-back.d677e786.png') {
+  console.log(1);
+
+  if (source === 'http://localhost:1234/card-back.d677e786.png') {
     flipCard(cardId, cardNum);
     return true;
   }
@@ -735,7 +737,7 @@ function resetCards() {
     img.src = _model.back;
   }
 }
-},{"ez-read":"node_modules/ez-read/ez-read.js","./model":"model.js","./flip-card":"flip-card.js","./check-match":"check-match.js"}],"../../../.npm/_npx/330252/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ez-read":"node_modules/ez-read/ez-read.js","./model":"model.js","./flip-card":"flip-card.js","./check-match":"check-match.js"}],"../../../.npm/_npx/335255/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -763,7 +765,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37023" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43045" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -939,5 +941,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../.npm/_npx/330252/lib/node_modules/parcel/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["../../../.npm/_npx/335255/lib/node_modules/parcel/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/mgame.e31bb0bc.js.map
