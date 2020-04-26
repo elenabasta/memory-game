@@ -117,150 +117,142 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/ez-read/ez-read.js":[function(require,module,exports) {
-'use strict'
+})({"ez-read.js":[function(require,module,exports) {
+'use strict';
 
-const ezRead = {
-  any: function(callback, array) {
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var ezRead = {
+  any: function any(callback, array) {
     if (typeof callback === 'function' && Array.isArray(array)) {
       return array.some(callback);
+    } else {
+      return "Expected: (function, array)\n Actual: (".concat(_typeof(callback), ", ").concat(_typeof(array), ")");
     }
-    else {
-      return `Expected: (function, array)\n Actual: (${typeof callback}, ${typeof array})`;
-    }
-    
   },
-
-  average: function(arr) {
-    const summedArray =  arr.reduce((acc, current) => acc + current, 0);
-    const result = summedArray / arr.length;
+  average: function average(arr) {
+    var summedArray = arr.reduce(function (acc, current) {
+      return acc + current;
+    }, 0);
+    var result = summedArray / arr.length;
     return result;
   },
+  cond: function cond() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-  cond: function(...args) {
-    for (let i = 0; i < args.length; i++) {
+    for (var i = 0; i < args.length; i++) {
       if (i % 2 === 0) {
-        if (i === args.length - 1 && (typeof args[i] === 'function')) {
+        if (i === args.length - 1 && typeof args[i] === 'function') {
           return args[i]();
-        } 
-        else if (i === args.length - 1) {
+        } else if (i === args.length - 1) {
           return args[i];
-        }
-        else if (args[i] && (typeof args[i + 1] === 'function')) {
+        } else if (args[i] && typeof args[i + 1] === 'function') {
           return args[i + 1]();
-        } 
-        else if (args[i]) {
+        } else if (args[i]) {
           return args[i + 1];
-        } 
+        }
       }
     }
   },
-
-  digit: function(char) {
-    const digits = [0,1,2,3,4,5,6,7,8,9];
-    const isDigit = digits.includes(char);
+  digit: function digit(char) {
+    var digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    var isDigit = digits.includes(char);
     return isDigit;
   },
-
-  drop: function(num, item) {
-      if (typeof num === 'number' && (typeof item === 'string' || Array.isArray(item))) {
-        return item.slice(num)
-      }
-      else {
-          throw new TypeError(`Expected: (number, (string or array))\n Actual: (${typeof num}, ${typeof item})`)
-      }
+  drop: function drop(num, item) {
+    if (typeof num === 'number' && (typeof item === 'string' || Array.isArray(item))) {
+      return item.slice(num);
+    } else {
+      throw new TypeError("Expected: (number, (string or array))\n Actual: (".concat(_typeof(num), ", ").concat(_typeof(item), ")"));
+    }
   },
+  empty: function empty(item) {
+    var isEmpty = item.length === 0;
 
-  empty: function(item) {
-    const isEmpty = item.length === 0
     if (typeof item === 'string' || Array.isArray(item)) {
       return isEmpty;
-    }
-    else if (typeof item === 'object') {
+    } else if (_typeof(item) === 'object') {
       for (prop in item) {
         if (item.hasOwnProperty(prop)) {
           return false;
         }
       }
+
       return true;
-    }
-    else {
-      throw new TypeError(`Expected a string, array, or object.\n Actual: ${typeof item}`);
+    } else {
+      throw new TypeError("Expected a string, array, or object.\n Actual: ".concat(_typeof(item)));
     }
   },
-
-  even: function(num) {
+  even: function even(num) {
     if (typeof num === 'number') {
       return num % 2 === 0;
-    }
-    else if (Array.isArray(num)) {
+    } else if (Array.isArray(num)) {
       throw new TypeError('Expected: number.\n Actual: array');
-    }
-    else {
-      throw new TypeError(`Expected: number.\n Actual: ${typeof num}`);
+    } else {
+      throw new TypeError("Expected: number.\n Actual: ".concat(_typeof(num)));
     }
   },
+  flattenAll: function flattenAll() {
+    var levelArray = [];
 
-  flattenAll: function(...arrays) {
-    let levelArray = [];
-    for (let i = 0; i < arrays.length; i++) {
-        if(!Array.isArray(arrays[i])) {
-            levelArray.push(arrays[i]);
-            continue;
-        }
-        let newArray = arrays[i].flat(Infinity);
-        levelArray.push(newArray);
+    for (var _len2 = arguments.length, arrays = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      arrays[_key2] = arguments[_key2];
     }
-    let flatArray = levelArray.flat();
+
+    for (var i = 0; i < arrays.length; i++) {
+      if (!Array.isArray(arrays[i])) {
+        levelArray.push(arrays[i]);
+        continue;
+      }
+
+      var newArray = arrays[i].flat(Infinity);
+      levelArray.push(newArray);
+    }
+
+    var flatArray = levelArray.flat();
     return flatArray;
   },
-
-  freeze: function(item) {
+  freeze: function freeze(item) {
     if (item === null) {
       throw new TypeError('Expected: object or array.\n Cannot freeze null value');
-    }
-    else if (typeof item === 'object' || Array.isArray(item)) {
+    } else if (_typeof(item) === 'object' || Array.isArray(item)) {
       Object.freeze(item);
-
-      Object.getOwnPropertyNames(item).forEach(prop => {
-        if (item.hasOwnProperty(prop)
-        && item[prop] !== null
-        && (typeof item[prop] === "object" || typeof item[prop] === "function")
-        && !Object.isFrozen(item[prop])) {
+      Object.getOwnPropertyNames(item).forEach(function (prop) {
+        if (item.hasOwnProperty(prop) && item[prop] !== null && (_typeof(item[prop]) === "object" || typeof item[prop] === "function") && !Object.isFrozen(item[prop])) {
           Object.freeze(item[prop]);
         }
       });
-      
       return item;
-    }
-    else {
-      throw new TypeError(`Can only freeze objects.\n Expected: 'object'\n Actual ${typeof item}`);
+    } else {
+      throw new TypeError("Can only freeze objects.\n Expected: 'object'\n Actual ".concat(_typeof(item)));
     }
   },
-
-  frozen: function(item) {
-    if (typeof item === 'object') {
+  frozen: function frozen(item) {
+    if (_typeof(item) === 'object') {
       return Object.isFrozen(item);
-    }
-    else {
-      throw new TypeError(`Expected: object or array\n Actual: ${typeof item}`)
+    } else {
+      throw new TypeError("Expected: object or array\n Actual: ".concat(_typeof(item)));
     }
   },
-
-  head: function(item) {
-      if ((typeof item === 'string' || Array.isArray(item)) && item !== '' && item !== []) {
-        return item[0]
-      }
-      else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
-          throw new Error(`Empty input:\nCannot retrieve head of empty string or array`);
-      }
-      else {
-          throw new TypeError(`Expected: string or array\n Actual: ${typeof item}`);
-      }
+  head: function head(item) {
+    if ((typeof item === 'string' || Array.isArray(item)) && item !== '' && item !== []) {
+      return item[0];
+    } else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
+      throw new Error("Empty input:\nCannot retrieve head of empty string or array");
+    } else {
+      throw new TypeError("Expected: string or array\n Actual: ".concat(_typeof(item)));
+    }
   },
-
-  ifThen: function(cond, callback) {
-    if (cond && (typeof callback === 'function')) {
+  ifThen: function ifThen(cond, callback) {
+    if (cond && typeof callback === 'function') {
       return callback();
     } else if (cond) {
       return callback;
@@ -268,296 +260,265 @@ const ezRead = {
       return null;
     }
   },
-
-  ifThenElse: function(cond, callback, elseCallback) {
-    if (cond && (typeof callback === 'function')) {
+  ifThenElse: function ifThenElse(cond, callback, elseCallback) {
+    if (cond && typeof callback === 'function') {
       return callback();
     } else if (cond) {
       return callback;
-    } else if (!cond && (typeof elseCallback === 'function')) {
-        return elseCallback();
+    } else if (!cond && typeof elseCallback === 'function') {
+      return elseCallback();
     } else {
       return elseCallback;
     }
   },
-
-  init: function(item) {
+  init: function init(item) {
     if ((typeof item === 'string' || Array.isArray(item)) && item !== '' && item !== []) {
       return item.slice(0, item.length - 1);
-    }
-    else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
-        throw new Error(`Empty input:\nCannot retrieve init of empty string or array`);
-    }
-    else {
-        throw new TypeError(`Expected: string or array\n Actual: ${typeof item}`);
+    } else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
+      throw new Error("Empty input:\nCannot retrieve init of empty string or array");
+    } else {
+      throw new TypeError("Expected: string or array\n Actual: ".concat(_typeof(item)));
     }
   },
-
-  input: function(prompt) {
-    const userInput = readlineSync.question(prompt);
+  input: function input(prompt) {
+    var userInput = readlineSync.question(prompt);
     return userInput;
   },
-
-  integer: function(item) {
+  integer: function integer(item) {
     return Number.isInteger(item);
   },
-
-  is: function(item) {
+  is: function is(item) {
     return item;
   },
-
-  last: function(item) {
+  last: function last(item) {
     if ((typeof item === 'string' || Array.isArray(item)) && item !== '' && item !== []) {
       return item[item.length - 1];
+    } else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
+      throw new Error("Empty input:\nCannot retrieve last of empty string or array");
+    } else {
+      throw new TypeError("Expected: string or array\n Actual: ".concat(_typeof(item)));
     }
-    else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
-        throw new Error(`Empty input:\nCannot retrieve last of empty string or array`);
-    }
-    else {
-        throw new TypeError(`Expected: string or array\n Actual: ${typeof item}`);
-    }
-    },
-
-  nil: function(item) {
-    const isNil = item === null || item === undefined;
+  },
+  nil: function nil(item) {
+    var isNil = item === null || item === undefined;
     return isNil;
   },
-
-  not: function(bool) {
+  not: function not(bool) {
     if (typeof bool === 'boolean') {
       return !bool;
-    }
-    else {
-      throw new TypeError(`Expected: boolean\n Actual: ${typeof bool}`);
+    } else {
+      throw new TypeError("Expected: boolean\n Actual: ".concat(_typeof(bool)));
     }
   },
-
-  number: function(item) {
-    const isNumber = typeof item === 'number' && !isNaN(item);
+  number: function number(item) {
+    var isNumber = typeof item === 'number' && !isNaN(item);
     return isNumber;
   },
-
-  odd: function(num) {
+  odd: function odd(num) {
     if (typeof num === 'number') {
       return num % 2 !== 0;
-    }
-    else if (Array.isArray(num)) {
+    } else if (Array.isArray(num)) {
       throw new TypeError('Expected: number.\n Actual: array');
-    }
-    else {
-      throw new TypeError(`Expected: number.\n Actual: ${typeof num}`);
+    } else {
+      throw new TypeError("Expected: number.\n Actual: ".concat(_typeof(num)));
     }
   },
-
-  onlyDigits: function (string) {
+  onlyDigits: function onlyDigits(string) {
     if (typeof string === 'string') {
-      let digitsOnly = string.replace(/[^\d]/g, '');
+      var digitsOnly = string.replace(/[^\d]/g, '');
       return digitsOnly;
-    }
-    else if (Array.isArray(string)) {
+    } else if (Array.isArray(string)) {
       throw new TypeError('Expected: number.\n Actual: array');
-    }
-    else {
-      throw new TypeError(`@onlyDigits\nExpected: string\n Actual: ${typeof string}`);
+    } else {
+      throw new TypeError("@onlyDigits\nExpected: string\n Actual: ".concat(_typeof(string)));
     }
   },
-
-  onlyLetters: function (string) {
+  onlyLetters: function onlyLetters(string) {
     if (typeof string === 'string') {
-      let newString = string.replace(/[^a-zA-z]/g, '');
+      var newString = string.replace(/[^a-zA-z]/g, '');
       return newString;
-    }
-    else if (Array.isArray(string)) {
+    } else if (Array.isArray(string)) {
       throw new TypeError('Expected: number.\n Actual: array');
-    }
-    else {
-      throw new TypeError(`@onlyLetters\nExpected: string\n Actual: ${typeof string}`);
+    } else {
+      throw new TypeError("@onlyLetters\nExpected: string\n Actual: ".concat(_typeof(string)));
     }
   },
-
-  print: function(item) {
+  print: function print(item) {
     console.log(item);
   },
-  
-  randomInt: function(min, max) {
+  randomInt: function randomInt(min, max) {
     if (typeof min === 'number' && typeof max === 'number') {
       return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-    else {
-      throw new TypeError(`Expected: (number, number)\n Actual: (${typeof min}, ${typeof max})`);
+    } else {
+      throw new TypeError("Expected: (number, number)\n Actual: (".concat(_typeof(min), ", ").concat(_typeof(max), ")"));
     }
   },
-
-  randomChoice: function(array) {
+  randomChoice: function randomChoice(array) {
     if (Array.isArray(array)) {
-      let chosenInt = Math.floor(Math.random() * array.length);
+      var chosenInt = Math.floor(Math.random() * array.length);
       return array[chosenInt];
-    }
-    else {
-      throw new TypeError(`Expected array:\n Actual: ${typeof array}`);
+    } else {
+      throw new TypeError("Expected array:\n Actual: ".concat(_typeof(array)));
     }
   },
-
-  range: function(firstNumber, secondNumber) {
+  range: function range(firstNumber, secondNumber) {
     if (typeof firstNumber !== 'number' || typeof secondNumber !== 'number') {
-      throw new TypeError(`Expected: (number, number)\n Actual: (${typeof firstNumber}, ${typeof secondNumber})`);
+      throw new TypeError("Expected: (number, number)\n Actual: (".concat(_typeof(firstNumber), ", ").concat(_typeof(secondNumber), ")"));
     }
- 
+
     if (firstNumber < 0 && secondNumber === undefined) {
       secondNumber = 0;
       return makeArray(firstNumber, secondNumber);
-    } 
-    
-    else if (secondNumber === undefined) {
+    } else if (secondNumber === undefined) {
       secondNumber = firstNumber;
       firstNumber = 0;
       return makeArray(firstNumber, secondNumber);
-    } 
-    
-    else if (firstNumber <= secondNumber) {
+    } else if (firstNumber <= secondNumber) {
       return makeArray(firstNumber, secondNumber);
-    } 
-    
-    else if (firstNumber >= secondNumber) {
+    } else if (firstNumber >= secondNumber) {
       return makeReverseArray(firstNumber, secondNumber);
     }
 
     return rangeArray;
   },
-
-
-  reverse: function(item) {
+  reverse: function reverse(item) {
     if (Array.isArray(item)) {
       return item.reverse();
-    } 
-    else if (typeof item === 'string') {
-      let newWord = item.split('').reverse().join('');
+    } else if (typeof item === 'string') {
+      var newWord = item.split('').reverse().join('');
       return newWord;
-    }
-    else {
-      throw new TypeError(`Expected: string or array\n Actual: ${typeof item}`);
+    } else {
+      throw new TypeError("Expected: string or array\n Actual: ".concat(_typeof(item)));
     }
   },
-
-
-  seal: function(item) {
+  seal: function seal(item) {
     if (item === null) {
       throw new TypeError('Expected: object or array.\n Cannot seal null value');
-    }
-    else if (typeof item === 'object' || Array.isArray(item)) {
+    } else if (_typeof(item) === 'object' || Array.isArray(item)) {
       return Object.seal(item);
-    }
-    else {
-      throw new TypeError(`Can only seal objects.\n Expected: 'object'\n Actual ${typeof item}`);
+    } else {
+      throw new TypeError("Can only seal objects.\n Expected: 'object'\n Actual ".concat(_typeof(item)));
     }
   },
-
-  shuffle: function(array) {
+  shuffle: function shuffle(array) {
     if (Array.isArray(array)) {
-      for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var _ref = [array[j], array[i]];
+        array[i] = _ref[0];
+        array[j] = _ref[1];
       }
-    return array;
-    }
-    else {
-      throw new TypeError(`Expected: array\n Actual: ${typeof array}`);
+
+      return array;
+    } else {
+      throw new TypeError("Expected: array\n Actual: ".concat(_typeof(array)));
     }
   },
+  splitEvery: function splitEvery(num, array) {
+    if (typeof num === 'number' && Array.isArray(array)) {
+      var splitArray = [];
+      var currentArray = [];
 
-  splitEvery: function(num, array) {
-      if (typeof num === 'number' && Array.isArray(array)) {
-        let splitArray = []
-        let currentArray = []
-        for (let i = 1; i < array.length + 1; i++) {
-          currentArray.push(array[i - 1])
-          if (i % num === 0) {
-              splitArray.push(currentArray)
-              currentArray = []
-          } 
-          else if (i === array.length) {
-              splitArray.push(currentArray)
-          }
+      for (var i = 1; i < array.length + 1; i++) {
+        currentArray.push(array[i - 1]);
+
+        if (i % num === 0) {
+          splitArray.push(currentArray);
+          currentArray = [];
+        } else if (i === array.length) {
+          splitArray.push(currentArray);
         }
-        return splitArray
       }
-      else if (Array.isArray(num), Array.isArray(array)){
-          return `Expected: (number, array)\n Actual: (array, array)`
-      }
-      else if (!Array.isArray(num), Array.isArray(array)) {
-        return `Expected: (number, array)\n Actual: (${typeof num}, array)`
-      }
-      else {
-        return `Expected: (number, array)\n Actual: (${typeof num}, ${typeof array})`
-      }
+
+      return splitArray;
+    } else if (Array.isArray(num), Array.isArray(array)) {
+      return "Expected: (number, array)\n Actual: (array, array)";
+    } else if (!Array.isArray(num), Array.isArray(array)) {
+      return "Expected: (number, array)\n Actual: (".concat(_typeof(num), ", array)");
+    } else {
+      return "Expected: (number, array)\n Actual: (".concat(_typeof(num), ", ").concat(_typeof(array), ")");
+    }
   },
+  sum: function sum() {
+    for (var _len3 = arguments.length, numbers = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      numbers[_key3] = arguments[_key3];
+    }
 
-  sum: function(...numbers) {
-    let numbersFlattened = numbers.reduce((accumulator, currentValue) => accumulator.concat(currentValue), []);
-
-    let numbersToBeSummed = numbersFlattened.map((item) => Number(item));
-
-    let sum = numbersToBeSummed.reduce((accumulator, currentValue) => accumulator + currentValue);
+    var numbersFlattened = numbers.reduce(function (accumulator, currentValue) {
+      return accumulator.concat(currentValue);
+    }, []);
+    var numbersToBeSummed = numbersFlattened.map(function (item) {
+      return Number(item);
+    });
+    var sum = numbersToBeSummed.reduce(function (accumulator, currentValue) {
+      return accumulator + currentValue;
+    });
     return sum;
   },
-
-  tail: function(item) {
+  tail: function tail(item) {
     if ((typeof item === 'string' || Array.isArray(item)) && item !== '' && item !== []) {
       return item.slice(1, item.length);
-    }
-    else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
-        throw new Error(`Empty input:\nCannot retrieve init of empty string or array`);
-    }
-    else {
-        throw new TypeError(`Expected: string or array\n Actual: ${typeof item}`);
+    } else if ((typeof item === 'string' || Array.isArray(item)) && (item === '' || item === [])) {
+      throw new Error("Empty input:\nCannot retrieve init of empty string or array");
+    } else {
+      throw new TypeError("Expected: string or array\n Actual: ".concat(_typeof(item)));
     }
   },
-
-  take: function(number, item) {
-      const result = item.slice(0, number);
-      return result;
+  take: function take(number, item) {
+    var result = item.slice(0, number);
+    return result;
   },
-
-  unique: function(arr) {
+  unique: function unique(arr) {
     if (Array.isArray(arr)) {
-      let uniques = [];
-      for (item of arr) {
-        if(uniques.indexOf(item) === -1) {
-          uniques.push(item);
+      var uniques = [];
+
+      var _iterator = _createForOfIteratorHelper(arr),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          item = _step.value;
+
+          if (uniques.indexOf(item) === -1) {
+            uniques.push(item);
+          }
         }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
+
       return uniques;
+    } else {
+      throw new TypeError("Expected: array\n Actual: ".concat(arr));
     }
-    else {
-      throw new TypeError(`Expected: array\n Actual: ${arr}`);
-    }
-  },
-}
-
-
-
-// Helper functions
-
+  }
+}; // Helper functions
 // Range helper -------------------------------------------------------------------------------
-function makeArray (firstNumber, secondNumber) {
-  let rangeArray = [];
-  for (let i = firstNumber; i <= secondNumber; i++) {
-      rangeArray.push(i);
-  }   
+
+function makeArray(firstNumber, secondNumber) {
+  var rangeArray = [];
+
+  for (var i = firstNumber; i <= secondNumber; i++) {
+    rangeArray.push(i);
+  }
+
   return rangeArray;
 }
 
 function makeReverseArray(firstNumber, secondNumber) {
-  let rangeArray = [];
-  for (let i = firstNumber; i >= secondNumber; i--) {
-      rangeArray.push(i);
+  var rangeArray = [];
+
+  for (var i = firstNumber; i >= secondNumber; i--) {
+    rangeArray.push(i);
   }
+
   return rangeArray;
-}
+} // ------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------------------------
 
-module.exports = ezRead
+module.exports = ezRead;
 },{}],"sprites/front-1.png":[function(require,module,exports) {
 module.exports = "/front-1.1ec382ce.png";
 },{}],"sprites/front-2.png":[function(require,module,exports) {
@@ -578,7 +539,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.winMessage = exports.scoreBoard = exports.back = exports.shuffledCardFronts = exports.newGameButton = exports.cardContainer = void 0;
 
-var _ezRead = require("ez-read");
+var _ezRead = require("./ez-read");
 
 var front1 = require('./sprites/front-1.png');
 
@@ -604,7 +565,7 @@ exports.winMessage = winMessage;
 var cardFrontArray = (0, _ezRead.seal)([front1, front1, front2, front2, front3, front3, front4, front4, front5, front5]);
 var shuffledCardFronts = (0, _ezRead.shuffle)(cardFrontArray);
 exports.shuffledCardFronts = shuffledCardFronts;
-},{"ez-read":"node_modules/ez-read/ez-read.js","./sprites/front-1.png":"sprites/front-1.png","./sprites/front-2.png":"sprites/front-2.png","./sprites/front-3.png":"sprites/front-3.png","./sprites/front-4.png":"sprites/front-4.png","./sprites/front-5.png":"sprites/front-5.png","./sprites/card-back.png":"sprites/card-back.png"}],"flip-card.js":[function(require,module,exports) {
+},{"./ez-read":"ez-read.js","./sprites/front-1.png":"sprites/front-1.png","./sprites/front-2.png":"sprites/front-2.png","./sprites/front-3.png":"sprites/front-3.png","./sprites/front-4.png":"sprites/front-4.png","./sprites/front-5.png":"sprites/front-5.png","./sprites/card-back.png":"sprites/card-back.png"}],"flip-card.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -657,7 +618,7 @@ exports.default = _default;
 },{}],"index.js":[function(require,module,exports) {
 'use strict';
 
-var _ezRead = require("ez-read");
+var _ezRead = require("./ez-read");
 
 var _model = require("./model");
 
@@ -737,7 +698,7 @@ function resetCards() {
     img.src = _model.back;
   }
 }
-},{"ez-read":"node_modules/ez-read/ez-read.js","./model":"model.js","./flip-card":"flip-card.js","./check-match":"check-match.js"}],"../../../.npm/_npx/335255/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./ez-read":"ez-read.js","./model":"model.js","./flip-card":"flip-card.js","./check-match":"check-match.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -765,7 +726,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43045" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35439" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -941,5 +902,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../.npm/_npx/335255/lib/node_modules/parcel/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/mgame.e31bb0bc.js.map

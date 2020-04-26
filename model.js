@@ -1,6 +1,6 @@
 'use strict'
 
-import {shuffle,seal} from 'ez-read' ;
+import {shuffle,seal} from './ez-read' ;
 
 const front1 = require('./sprites/front-1.png');
 const front2 = require('./sprites/front-2.png');

@@ -1,6 +1,6 @@
 'use strict'
 
-import{drop} from 'ez-read';
+import{drop} from './ez-read';
 import{back, cardContainer, newGameButton, scoreBoard, winMessage, shuffledCardFronts} from'./model';
 import maybeFlip from './flip-card';
 import maybeCheckMatch from './check-match';
